@@ -1,0 +1,57 @@
+class Node(object):
+    def __init__(self,data):
+        self.data = data
+        self.leftchild = None
+        self.rightchild = None
+class BinarySearchTree(object):
+    def __init__(self):
+        self.root = None
+    def insert(self,data):
+        if not self.root:
+            self.root = Node(data)
+        else:
+            self.insertnode(data,self.root)   
+    def insertnode(self,data,node):
+        if data < node.data:
+            if node.leftchild:
+                self.insertnode(data,node.leftchild)
+            else:
+                node.leftchild = Node(data)
+        else:
+            if node.rightchild:
+                self.insertnode(data,node.rightchild)
+            else:
+                node.rightchild = Node(data)
+    def GetMinValue(self):
+        if self.root:
+            return self.GetMin(self.root)
+    def GetMin(self,node):
+        if node.leftchild:
+            return self.GetMin(node.leftchild)
+        return node.data
+    def GetMaxValue(self):
+        if self.root:
+            return self.GetMax(self.root)
+    def GetMax(self,node):
+        if node.rightchild:
+            return self.GetMax(node.rightchild)
+        return node.data
+    def traverse(self):
+        if self.root:
+            self.traverseInorder(self.root)
+    def traverseInorder(self,node):
+        if node.leftchild:
+            self.traverseInorder(node.leftchild)
+            
+        print(" %s " % node.data)
+        
+        if node.rightchild:
+            self.traverseInorder(node.rightchild)
+            
+    def remove(self,data):
+        if self.root:
+            self.removeNode(data,self.root)
+    def predecessor(self,node):
+        if node.rightchild:
+            self.predecessor(node.rightchild)
+        return node
