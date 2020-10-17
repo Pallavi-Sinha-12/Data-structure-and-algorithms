@@ -1,0 +1,73 @@
+class Node(object):
+    def __init__(self,data):
+        self.data = data
+        self.height = 0
+        self.leftchild = None
+        self.rightchild = None
+class AVL(object):
+    def __init__(self):
+        self.root = None
+    def calcHeight(self,node):
+        if not node:
+            return -1;
+        return node.height
+    def calcBalance(self,node):
+        if not node:
+            return 0;
+        return self.calcHeight(node.lefchild)-self.calcHeight(node.rightchild)
+    #if it returns value > 1 it means it is left heavy tree --> rightRotation
+    #if it returns value <1 it means it is right heavy tree -->leftRotation 
+    def rotateRight(self,node):
+        print("Rotating to the right on node ",node.data)
+        templeftchild = node.leftchild
+        t = templeftchild.rightchild
+        
+        templeftchild.rightchild = node
+        node.leftchild = t
+    def rotateLeft(self,node):
+        print("Rotating to the left on node ",node.data)
+        temprightchild = node.rightchild
+        t = temprightchild.leftchild
+        
+        temprightchild.leftchild = node
+        node.rightchild = t
+        
+    def insert(self,data,node):
+        self.root = self.insertNode(data,self.root)
+    def insertNode(self,data,node):
+        if not node:
+            return Node(data)
+        if data < node.data:
+            node.leftchild = self.insertNode(data,node.leftchild)
+        else:
+            node.rightchild = self.insertNode(data,node.rightchild)
+            
+        node.height = max(self.calcHeight(node.leftchild),self.calcHeight(node.rightchild))+1
+        
+        return self.settleViolation(data,node)
+    def settleViolation(self,data,node):
+        balance = self.calcBalance(node)
+        #case 1: left left heavy situation:
+        if balance >1 and data < node.leftchild.data:
+            print("left left heavy situation...")
+            return self.rotateRight(node)
+        #case 2: right right heavy situation:
+        if balance < 1 and data>node.rightchild.data:
+            print("right right heavy situation...")
+            return self.rotateLeft(node)
+        #case 3:
+        if balance >1 and data>node.leftchild.data:
+            print("left right heavy situation...")
+            node.leftchild = self.rotateLeft(node.leftchild)
+            return self.rotateRight(node)
+        
+        #case 4:
+        if balance <1 and data<node.leftchild.data:
+            print("right left heavy situation...")
+            node.rightchild = self.rotateRight(node.rightchild)
+            return self.rotateLeft(node)
+            
+        
+            
+    
+        
