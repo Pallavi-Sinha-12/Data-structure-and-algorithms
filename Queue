@@ -1,0 +1,13 @@
+class Queue():
+    def __init__(self):
+        self.q = []
+    def isempty(self):
+        return self.q == []
+    def enQ(self,data):
+        self.q.append(data)
+    def deQ(self):
+        data = self.stack[0]
+        del self.stack[0]
+        return data
+    def peek(self):
+        return self.stack[0]
