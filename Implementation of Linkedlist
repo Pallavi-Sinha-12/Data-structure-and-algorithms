@@ -1,0 +1,43 @@
+class node(object):
+    def __init__(self,data):
+        self.data = data
+        self.nextnode = None
+class linkedlist(object):
+    def __init__(self):
+        self.head = None
+        self.size = 0
+    def insertstart(self,data):
+        self.size += 1
+        newnode = node(data)
+        if not self.head:
+            self.head = newnode
+        else:
+            newnode.nextnode = self.head
+            self.head = newnode
+    def traverse(self):
+        currentnode = self.head
+        while currentnode is not None:
+            print("%d" % currentnode.data)
+            currentnode = currentnode.nextnode
+    def insertend(self,data):
+        self.size += 1
+        newnode = node(data)
+        actualnode = self.head
+        while actualnode.nextnode is not None:
+            actualnode = actualnode.nextnode
+        actualnode.nextnode = newnode
+    def size(self):
+        return (self.size)
+    def delete(self,data):
+        self.size -= 1
+        cn = self.head
+        pn = None
+        while cn.data != data:
+            pn = cn
+            cn = cn.nextnode
+        if pn is None:
+            self.head = cn.nextnode
+        else:
+            pn.nextnode = cn.nextnode
+                
+        
